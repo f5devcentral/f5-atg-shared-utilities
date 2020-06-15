@@ -8,4 +8,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2020-06-15
 ### Added
-- Created the CHANGELOG, built the file structure, added ESLINT, and added basic files
+- Created the CHANGELOG, built the file structure, added ESLINT, and added basic arrayUtil function as example
