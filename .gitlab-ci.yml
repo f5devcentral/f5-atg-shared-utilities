@@ -1,0 +1,52 @@
+# AT generally uses node 4.8.0 and so this will too
+stages:
+    - lint
+    - test
+
+lint:
+    image: node:latest
+    stage: lint
+    script:
+        - npm ci
+        - npm run lint
+
+node:4:
+    image: node:4.8.0
+    stage: test
+    script:
+        - npm install --global npm@5.10.0
+        - npm install
+        - npm install mocha@5.2.0
+        - npm test
+
+node:6:
+    image: node:6
+    stage: test
+    script:
+        - npm install
+        - npm install mocha@6.2.2
+        - npm test
+
+node:8:
+    image: node:8
+    stage: test
+    script:
+        - npm ci
+        - npm test
+
+node:latest:
+    image: node:latest
+    stage: test
+    script:
+        - npm ci
+        - npm test
+
+coverage:
+    image: node:latest
+    stage: test
+    script:
+        - npm ci
+        - npm run coverage
+    artifacts:
+        paths:
+            - coverage

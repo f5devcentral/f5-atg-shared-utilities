@@ -10,7 +10,7 @@
 
 const assert = require('assert');
 
-const arrayUtils = require('../../../src/utils/arrayUtils.js');
+const arrayUtils = require('../../../src/arrayUtils.js');
 
 describe('arrayUtils', () => {
     describe('.ensureArray', () => {

@@ -1,14 +1,16 @@
 {
     "name": "atg-shared-utilities",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "scripts": {
         "lint": "eslint .",
-        "test": "node scripts/build/schema-build.js && mocha test/unit/ --recursive",
+        "test": "mocha test/unit/ --recursive",
         "coverage": "nyc npm test"
     },
     "devDependencies": {
         "@f5devcentral/eslint-config-f5-atg": "latest",
-        "mocha": "^7.1.2"
+        "mocha": "^7.1.2",
+        "coverage": "^0.4.1",
+        "nyc": "^15.1.0"
     },
     "eslintConfig": {
         "extends": "@f5devcentral/eslint-config-f5-atg",
@@ -16,5 +18,18 @@
             "func-names": "off"
         }
     },
-    "dependencies": {}
+    "nyc": {
+        "reporter": [
+            "html",
+            "text",
+            "json-summary"
+        ],
+        "exclude": [
+            "gulpfile.js",
+            "coverage/**",
+            "test/**",
+            "**/node_modules/**",
+            "**/dist/**"
+        ]
+    }
 }
