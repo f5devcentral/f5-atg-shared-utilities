@@ -4,3 +4,8 @@ node_modules
 
 # ignore npm-debug
 **/npm-debug.log
+
+# ignore coverage output
+**/coverage
+**/nyc_output
+**/.nyc_output

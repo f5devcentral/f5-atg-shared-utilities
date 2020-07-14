@@ -1,3 +1,3 @@
 # atg-shared-utilities
 
-This project brings out some of the utility functions from the other AT projects into a single shared location. This reduces redundancy and helps with keeping our code up to date.
+This project holds a number of generic utility functions that can be shared across the F5 Automation Toolchain projects.
