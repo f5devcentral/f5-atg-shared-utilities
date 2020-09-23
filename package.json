@@ -8,9 +8,9 @@
     },
     "devDependencies": {
         "@f5devcentral/eslint-config-f5-atg": "latest",
-        "mocha": "^7.1.2",
         "coverage": "^0.4.1",
-        "nyc": "^15.1.0"
+        "nyc": "^15.1.0",
+        "sinon": "^9.0.3"
     },
     "eslintConfig": {
         "extends": "@f5devcentral/eslint-config-f5-atg",
@@ -31,5 +31,9 @@
             "**/node_modules/**",
             "**/dist/**"
         ]
+    },
+    "dependencies": {
+        "@elastic/elasticsearch": "^7.9.0",
+        "mocha": "^7.2.0"
     }
 }
