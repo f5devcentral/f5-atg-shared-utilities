@@ -80,13 +80,13 @@ if (process.version.split('.')[0].substring(1) >= 8) {
                 assertResult(expectedBody);
             });
 
-            it('should send pass report on passed test', () => {
+            it('should send pass report on failed test', () => {
                 runner.emit('fail', test);
                 expectedBody.result = 'failed';
                 assertResult(expectedBody);
             });
 
-            it('should send pass report on passed test', () => {
+            it('should send pass report on skipped test', () => {
                 runner.emit('pending', test);
                 expectedBody.result = 'skipped';
                 assertResult(expectedBody);
