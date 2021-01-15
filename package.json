@@ -10,7 +10,9 @@
         "@f5devcentral/eslint-config-f5-atg": "latest",
         "coverage": "^0.4.1",
         "nyc": "^15.1.0",
-        "sinon": "^9.0.3"
+        "sinon": "7.5.0",
+        "chai": "^4.2.0",
+        "chai-as-promised": "^7.1.1"
     },
     "eslintConfig": {
         "extends": "@f5devcentral/eslint-config-f5-atg",
