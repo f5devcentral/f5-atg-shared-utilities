@@ -70,7 +70,11 @@ Click **Create tag**
 
 ## Push main to GitHub
 
-TO BE DETERMINED
+Add a remote for GitHub
+*git remote add github https://github.com/<TBD>*
+
+Push the current branch to GitHub
+*git push github*
 
 ### Publish to npm via terminal (requires npm permissions)
 
