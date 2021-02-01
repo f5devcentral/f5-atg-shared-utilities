@@ -58,11 +58,11 @@ Click **New tag**
 
 Fill in the form:
 
-Tag name = "vVersion.Number" (e.g. v0.1.0-1)
+Tag name = "vVer.Maj.min-build" (e.g. v0.1.0-1)
 
 Create from = "main"
 
-Message = "Release version vVersion.Number"
+Message = "Release version vVer.Maj.min-build"
 
 Release notes = CHANGELOG entry for this version
 
@@ -71,7 +71,7 @@ Click **Create tag**
 ## Push main to GitHub
 
 Add a remote for GitHub
-*git remote add github https://github.com/<TBD>*
+*git remote add github https://github.com/f5devcentral/f5-atg-shared-utilities*
 
 Push the current branch to GitHub
 *git push github*
