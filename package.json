@@ -47,6 +47,6 @@
         "type": "git",
         "url": "git@gitswarm.f5net.com:automation-toolchain/atg-shared-utilities.git"
     },
-    "author": "a.smithf5",
+    "author": "F5 Networks",
     "license": "Apache-2.0"
 }
