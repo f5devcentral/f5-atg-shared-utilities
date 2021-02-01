@@ -59,7 +59,7 @@ Adds the copyright template with current year to the top of every file in src/, 
 To run:
 *node scripts/dev/write-copyright.js*
 
-Requires the scripts/copyright.txt file, but can be modified to your needs.
+Requires the scripts/dev/copyright.txt file, but can be modified to your needs.
 
 ## License
 
