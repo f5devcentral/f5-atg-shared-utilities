@@ -16,7 +16,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
-const promiseUtil = require('../../src/promiseUtil');
+const promiseUtil = require('../../src/promiseUtils.js');
 
 describe('promiseUtil', () => {
     describe('.raceSuccess', () => {
