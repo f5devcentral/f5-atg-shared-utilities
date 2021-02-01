@@ -61,6 +61,16 @@ To run:
 
 Requires the scripts/dev/copyright.txt file, but can be modified to your needs.
 
+#### CICD Mode
+
+This script can be run as a CICD pipeline check by enabling the CICD mode.
+
+- Process will abort pipeline if an outdated copyright is found.
+- Process will exit gracefully if no outdated copyrights are found.
+
+To run:
+*node scripts/dev/write-copyright.js "cicd"*
+
 ## License
 
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
