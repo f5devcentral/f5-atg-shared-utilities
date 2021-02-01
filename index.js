@@ -17,13 +17,12 @@
 
 'use strict';
 
-class arrayUtils {
-    static ensureArray(input) {
-        if (typeof input === 'undefined') {
-            return [];
-        }
-        return (Array.isArray(input)) ? input : [input];
-    }
-}
+const arrayUtils = require('./src/arrayUtils.js');
+const elasticSearchReporter = require('./src/mochaReporters/elasticSearchReporter/elasticSearchReporter.js');
+const promiseUtils = require('./src/promiseUtils.js');
 
-module.exports = arrayUtils;
+module.exports = {
+    arrayUtils,
+    elasticSearchReporter,
+    promiseUtils
+};

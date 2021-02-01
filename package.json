@@ -1,6 +1,6 @@
 {
-    "name": "atg-shared-utilities",
-    "version": "0.1.0",
+    "name": "@f5devcentral/atg-shared-utilities",
+    "version": "0.1.1",
     "scripts": {
         "lint": "eslint .",
         "test": "mocha test/unit/ --recursive",
@@ -37,5 +37,16 @@
     "dependencies": {
         "@elastic/elasticsearch": "^7.9.0",
         "mocha": "^7.2.0"
-    }
+    },
+    "description": "This project holds a number of generic utility functions that can be shared across the F5 Automation Toolchain projects.",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@gitswarm.f5net.com:automation-toolchain/atg-shared-utilities.git"
+    },
+    "author": "F5 Networks",
+    "license": "Apache-2.0"
 }

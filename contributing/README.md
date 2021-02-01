@@ -58,11 +58,11 @@ Click **New tag**
 
 Fill in the form:
 
-Tag name = "vVersion.Number" (e.g. v0.1.0-1)
+Tag name = "vMajor.Minor.Patch-Build" (e.g. v0.1.0-1)
 
 Create from = "main"
 
-Message = "Release version vVersion.Number"
+Message = "Release version vMajor.Minor.Patch-Build"
 
 Release notes = CHANGELOG entry for this version
 
@@ -71,7 +71,7 @@ Click **Create tag**
 ## Push main to GitHub
 
 Add a remote for GitHub
-*git remote add github https://github.com/<TBD>*
+*git remote add github https://github.com/f5devcentral/f5-atg-shared-utilities*
 
 Push the current branch to GitHub
 *git push github*
@@ -93,6 +93,8 @@ Now we must get ready for the next release
 
 Switch back to develop:
 *git checkout develop*
+
+CHANGELOG should have the "unreleased" section moved to "released" and a new "unreleased" minor version written up.
 
 Increment the version number in package, package-lock, and CHANGELOG.
 
