@@ -58,11 +58,11 @@ Click **New tag**
 
 Fill in the form:
 
-Tag name = "vVer.maj.min-build" (e.g. v0.1.0-1)
+Tag name = "vMajor.Minor.Patch-Build" (e.g. v0.1.0-1)
 
 Create from = "main"
 
-Message = "Release version vVer.maj.min-build"
+Message = "Release version vMajor.Minor.Patch-Build"
 
 Release notes = CHANGELOG entry for this version
 
