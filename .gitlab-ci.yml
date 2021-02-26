@@ -2,6 +2,7 @@
 stages:
     - lint
     - test
+    - publish
 
 lint:
     image: node:latest
@@ -50,3 +51,18 @@ coverage:
     artifacts:
         paths:
             - coverage
+
+pages:
+  stage: publish
+  image: node:latest
+  dependencies:
+    - coverage
+  script:
+    - COVERAGE_DOCS=./public/coverage-docs
+    - mkdir -p ${COVERAGE_DOCS}
+    - cp -R coverage/* ${COVERAGE_DOCS}
+  artifacts:
+    paths:
+      - public
+  only:
+    - develop
