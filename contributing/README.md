@@ -94,7 +94,7 @@ Now we must get ready for the next release
 Switch back to develop:
 *git checkout develop*
 
-CHANGELOG should have the "unreleased" section moved to "released" and a new "unreleased" minor version written up.
+CHANGELOG should have the "unreleased" section updated to the released version number, remove the empty sections, and add new empty Added, Fixed, Changed, and Removed sections underneath "unreleased".
 
 Increment the version number in package, package-lock, and CHANGELOG.
 
