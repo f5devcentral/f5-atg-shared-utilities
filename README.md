@@ -42,35 +42,6 @@ This collection of utils focuses on generic functions useful to arrays.
 
 This function will take a variable, convert it to an array (if it is not an array), and return it. If undefined, it will return `[]`.
 
-## mochaReporters
-
-This is a collection of [custom reporters](https://mochajs.org/api/tutorial-custom-reporter.html) for Mocha.
-
-### elasticSearchReporter
-
-Sends test results to an elastic search host. See the [elasticSearchReporter README](src/mochaReporters/elasticSearchReporter/README.md) for details.
-
-## SCRIPTS
-
-### scripts/write-copyright.js
-
-Adds the copyright template with current year to the top of every file in src/, scripts/, and test/.
-
-To run:
-*node scripts/dev/write-copyright.js*
-
-Requires the scripts/dev/copyright.txt file, but can be modified to your needs.
-
-#### CICD Mode
-
-This script can be run as a CICD pipeline check by enabling the CICD mode.
-
-- Process will abort pipeline if an outdated copyright is found.
-- Process will exit gracefully if no outdated copyrights are found.
-
-To run:
-*node scripts/dev/write-copyright.js "cicd"*
-
 ## License
 
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)

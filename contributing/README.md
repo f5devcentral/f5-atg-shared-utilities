@@ -22,28 +22,47 @@ Each step assumes you've completed the previous steps.
 
 0. Navigate to the root directory of this project.
 
-1. Update main with the latest from develop
+1. Increment version numbers
 
-2. Tag main
+2. Update main with the latest from develop
 
-3. Push main to GitHub
+3. Tag main
 
-4. Publish main to npm
+4. Push main to GitHub
 
-5. Increment version numbers
+5. Publish main to npm
+
+### Increment version
+
+Now we must get ready for this release and increase the version number based on the improvements in this release.
+
+Switch to develop:\
+*git checkout develop*
+
+CHANGELOG
+- should have the "unreleased" section updated to the release version number
+- remove any empty sections
+- add new empty Added, Fixed, Changed, and Removed sections underneath "unreleased"
+
+Increment the version number in package, package-lock, and CHANGELOG.
+
+Push these changes to develop\
+*git add -up*\
+*git commit*\
+*git push*
 
 ### Update main with the latest from develop
 
-Checkout the main branch:
+Checkout the main branch:\
 *git checkout main*
 
-Confirm you've pulled the latest version:
+Confirm you've pulled the latest version:\
 *git pull*
 
-Bring the changes from origin/develop to main:
+Bring the changes from origin/develop to main:\
 *git merge origin/develop*
 
-If there was any differences push those changes to origin:
+If there was any differences push those changes to origin:\
 *git push*
 
 ### Tag main (via GUI)
@@ -70,35 +89,19 @@ Click **Create tag**
 
 ## Push main to GitHub
 
-Add a remote for GitHub
+Add a remote for GitHub\
 *git remote add github https://github.com/f5devcentral/f5-atg-shared-utilities*
 
-Push the current branch to GitHub
+Push the current branch to GitHub\
 *git push github*
 
 ### Publish to npm via terminal (requires npm permissions)
 
-Log into npm using:
+Log into npm using:\
 *npm login*
 
-Confirm the changes you want pushed to npm:
+Confirm the changes you want pushed to npm:\
 *npm publish --dry-run*
 
-Publish changes to npm
+Publish changes to npm\
 *npm publish --access public*
-
-### Increment version
-
-Now we must get ready for the next release
-
-Switch back to develop:
-*git checkout develop*
-
-CHANGELOG should have the "unreleased" section updated to the released version number, remove the empty sections, and add new empty Added, Fixed, Changed, and Removed sections underneath "unreleased".
-
-Increment the version number in package, package-lock, and CHANGELOG.
-
-Push these changes to develop
-*git add -up*
-*git commit*
-*git push*
