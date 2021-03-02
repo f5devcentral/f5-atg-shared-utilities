@@ -8,11 +8,11 @@
     },
     "devDependencies": {
         "@f5devcentral/eslint-config-f5-atg": "latest",
-        "coverage": "^0.4.1",
         "nyc": "^15.1.0",
         "sinon": "7.5.0",
         "chai": "^4.2.0",
-        "chai-as-promised": "^7.1.1"
+        "chai-as-promised": "^7.1.1",
+        "mocha": "^7.2.0"
     },
     "eslintConfig": {
         "extends": "@f5devcentral/eslint-config-f5-atg",
@@ -33,10 +33,6 @@
             "**/node_modules/**",
             "**/dist/**"
         ]
-    },
-    "dependencies": {
-        "@elastic/elasticsearch": "^7.9.0",
-        "mocha": "^7.2.0"
     },
     "description": "This project holds a number of generic utility functions that can be shared across the F5 Automation Toolchain projects.",
     "main": "index.js",
