@@ -46,7 +46,7 @@ CHANGELOG
 
 Increment the version number in package, package-lock, and CHANGELOG.
 
-Push these changes to develop\
+Push these changes to develop without MR\
 *git add -up*\
 *git commit*\
 *git push*
