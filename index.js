@@ -19,8 +19,10 @@
 
 const arrayUtils = require('./src/arrayUtils.js');
 const promiseUtils = require('./src/promiseUtils.js');
+const secureVault = require('./src/secureVault.js');
 
 module.exports = {
     arrayUtils,
-    promiseUtils
+    promiseUtils,
+    secureVault
 };

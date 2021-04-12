@@ -42,6 +42,18 @@ This collection of utils focuses on generic functions useful to arrays.
 
 This function will take a variable, convert it to an array (if it is not an array), and return it. If undefined, it will return `[]`.
 
+## SecureVault
+
+These BIG-IP only functions will use a BIG-IP's radius server to encrypt and decrypt JSON strings for you.
+
+### encrypt(string)
+
+This function will take in a string and return an encrypted array from that string.
+
+### decrypt(string)
+
+This function will take in an encrypted string and return an unencrypted string.
+
 ## License
 
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
