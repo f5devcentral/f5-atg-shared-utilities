@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-
 'use strict';
 
 const assert = require('assert');
 
-const arrayUtils = require('../../src/arrayUtils.js');
+const arrayUtils = require('../../src/arrayUtils');
 
 describe('arrayUtils', () => {
     describe('.ensureArray', () => {

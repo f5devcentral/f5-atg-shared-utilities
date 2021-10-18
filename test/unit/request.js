@@ -21,7 +21,7 @@ const https = require('https');
 const sinon = require('sinon');
 const nock = require('nock');
 
-const request = require('../../src/request.js');
+const request = require('../../src/request');
 
 describe('Request', () => {
     beforeEach(() => {

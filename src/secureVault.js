@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 'use strict';
 
 const crypto = require('crypto');
@@ -30,7 +29,7 @@ class SecureVault {
      */
     static encrypt(data) {
         const splitData = data.match(/.{1,500}/g);
-        return this._encryptHelper(splitData, [], 0).then(r => r.join(','));
+        return this._encryptHelper(splitData, [], 0).then((r) => r.join(','));
     }
 
     static _encryptHelper(dataAra, encryptedDataAra, i) {
