@@ -29,11 +29,13 @@ node:6:
         - npm test
 
 node:8:
-    image: $DOCKER_URL/node:8
-    stage: test
-    script:
-        - npm ci
-        - npm test
+  image: $DOCKER_URL/node:8.11.1
+  stage: test
+  script:
+    - npm install --global npm@5.10.0
+    - npm ci
+    - npm install mocha@7
+    - npm run test
 
 node:latest:
     image: $DOCKER_URL/node:latest
