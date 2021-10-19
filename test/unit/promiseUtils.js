@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-
 'use strict';
-
 
 const sinon = require('sinon');
 const chai = require('chai');
@@ -25,7 +23,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
-const promiseUtil = require('../../src/promiseUtils.js');
+const promiseUtil = require('../../src/promiseUtils');
 
 describe('promiseUtil', () => {
     describe('.raceSuccess', () => {

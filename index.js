@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-
 'use strict';
 
-const arrayUtils = require('./src/arrayUtils.js');
-const promiseUtils = require('./src/promiseUtils.js');
-const secureVault = require('./src/secureVault.js');
+const arrayUtils = require('./src/arrayUtils');
+const promiseUtils = require('./src/promiseUtils');
+const secureVault = require('./src/secureVault');
 
 module.exports = {
     arrayUtils,

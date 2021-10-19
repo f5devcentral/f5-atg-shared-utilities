@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 'use strict';
 
 /**
@@ -40,7 +39,7 @@ const delay = function (t, v) {
 const series = function (functions) {
     const results = [];
     return functions.reduce(
-        (promise, f) => promise.then(f).then(r => results.push(r)),
+        (promise, f) => promise.then(f).then((r) => results.push(r)),
         Promise.resolve()
     ).then(() => results);
 };
@@ -52,7 +51,7 @@ const series = function (functions) {
  *  @returns {Promise}
  */
 const parallel = function (functions) {
-    return Promise.all(functions.map(f => f()));
+    return Promise.all(functions.map((f) => f()));
 };
 
 /**
@@ -65,14 +64,14 @@ function raceSuccess(promises) {
     // If a request fails, count that as a resolution so it will keep
     // waiting for other possible successes. If a request succeeds,
     // treat it as a rejection so Promise.all immediately bails out.
-    return Promise.all(promises.map(p => p.then(
-        val => Promise.reject(val),
-        err => Promise.resolve(err)
+    return Promise.all(promises.map((p) => p.then(
+        (val) => Promise.reject(val),
+        (err) => Promise.resolve(err)
     ))).then(
         // If '.all' resolved, we've just got an array of errors.
-        errors => Promise.reject(errors),
+        (errors) => Promise.reject(errors),
         // If '.all' rejected, we've got the result we wanted.
-        val => Promise.resolve(val)
+        (val) => Promise.resolve(val)
     );
 }
 
@@ -90,7 +89,7 @@ function retryPromise(fn, options, args) {
         args = [args];
     }
     return fn.apply(this, args)
-        .catch(err => this.delay(options.delay)
+        .catch((err) => this.delay(options.delay)
             .then(() => {
                 if (options.retries === 0) {
                     throw err;
