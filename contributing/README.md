@@ -87,7 +87,21 @@ Release notes = CHANGELOG entry for this version
 
 Click **Create tag**
 
-## Push main to GitHub
+### Push main to GitHub
+
+#### Using an SSH key
+
+Info on getting this setup: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
+Add a remote for GitHub\
+*git remote add github git@github.com:f5devcentral/f5-atg-shared-utilities.git*
+
+Push the current branch to GitHub\
+*git push github*
+
+#### Using a personal access token
+
+Create a personal access token in your GitHub account. This should help with how to do this: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
 Add a remote for GitHub\
 *git remote add github https://github.com/f5devcentral/f5-atg-shared-utilities*
