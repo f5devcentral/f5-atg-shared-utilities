@@ -19,9 +19,11 @@
 const arrayUtils = require('./src/arrayUtils');
 const promiseUtils = require('./src/promiseUtils');
 const secureVault = require('./src/secureVault');
+const tracer = require('./src/tracer');
 
 module.exports = {
     arrayUtils,
     promiseUtils,
-    secureVault
+    secureVault,
+    tracer
 };
