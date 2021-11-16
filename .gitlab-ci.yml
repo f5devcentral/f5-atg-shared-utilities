@@ -5,7 +5,7 @@ stages:
     - publish
 
 lint:
-    image: $DOCKER_URL/node:latest
+    image: $DOCKER_URL/node:12-buster
     stage: lint
     script:
         - npm ci
@@ -37,15 +37,15 @@ node:8:
     - npm install mocha@7
     - npm run test
 
-node:latest:
-    image: $DOCKER_URL/node:latest
+node:more_recent:
+    image: $DOCKER_URL/node:12-buster
     stage: test
     script:
         - npm ci
         - npm test
 
 coverage:
-    image: $DOCKER_URL/node:latest
+    image: $DOCKER_URL/node:12-buster
     stage: test
     script:
         - npm ci
