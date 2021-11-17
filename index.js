@@ -17,12 +17,14 @@
 'use strict';
 
 const arrayUtils = require('./src/arrayUtils');
+const ipUtils = require('./src/ipUtils');
 const promiseUtils = require('./src/promiseUtils');
 const secureVault = require('./src/secureVault');
 const tracer = require('./src/tracer');
 
 module.exports = {
     arrayUtils,
+    ipUtils,
     promiseUtils,
     secureVault,
     tracer

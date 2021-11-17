@@ -6,6 +6,34 @@ This project holds a number of generic utility functions that can be shared acro
 
 Read through the contributing/README.md for information on how to contribute to this project.
 
+## ipUtils
+
+These utilities will assist in IP address calculations
+
+### minimizeIP(ip)
+
+Minimize zeroes in the string representation of an F5 IPv4/6 address
+
+### isIPv4(ip)
+
+Checks if an address is IPv4
+
+### isIPv6(ip)
+
+Checks if an address is IPv6
+
+### splitAddress(address)
+
+Splits an IPv4 or IPv6 address into an address and port pair
+
+### getCidrFromNetmask(netmask, noSlash)
+
+Returns the CIDR for the given netmask. Optionally returns CIDR without a leading '/'
+
+### parseIpAddress(address)
+
+Parses an IP address into its components: IP, route domain, CIRD, netmask, IP with route
+
 ## promiseUtils
 
 These utilities will assist in managing promises within your program.
@@ -32,7 +60,7 @@ fn - The function to be run.
 options - An object with .retries and .delay. Both are required.
 args - An array of arguments passed into fn.
 
-This will run the function fn with the arguments args, up to a number of times equal to options.retries, or until a resolve. 
+This will run the function fn with the arguments args, up to a number of times equal to options.retries, or until a resolve.
 
 ## arrayUtils
 
