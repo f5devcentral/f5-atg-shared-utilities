@@ -19,6 +19,7 @@
 const arrayUtils = require('./src/arrayUtils');
 const ipUtils = require('./src/ipUtils');
 const promiseUtils = require('./src/promiseUtils');
+const requestUtils = require('./src/request');
 const secureVault = require('./src/secureVault');
 const tracer = require('./src/tracer');
 
@@ -26,6 +27,7 @@ module.exports = {
     arrayUtils,
     ipUtils,
     promiseUtils,
+    requestUtils,
     secureVault,
     tracer
 };

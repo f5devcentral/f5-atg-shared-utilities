@@ -28,7 +28,9 @@ class Request {
      * This function sends an HTTP request to an endpoint denoted in the supplied options object.
      *
      * @private
-     * @param {object} options - A JSON object with the following params
+     * @param {object} options - A JSON object with the following params. These are passed on to node's http/https
+     *                           request method. See https://nodejs.org/api/https.html#httpsrequestoptions-callback
+     *                           for details.
      * @param {object} options.headers - Holds various header options (e.g. 'Content-Length')
      * @param {string} options.protocol - 'http:' or 'https:'
      * @param {number} options.port
