@@ -70,6 +70,15 @@ This collection of utils focuses on generic functions useful to arrays.
 
 This function will take a variable, convert it to an array (if it is not an array), and return it. If undefined, it will return `[]`.
 
+
+## requestUtils
+
+This collection of utils is for sending http requests
+
+### send(options, body)
+
+Send an http/https request using the options and body. This is a wrapper around [node's http/https](https://nodejs.org/api/https.html#https) request functionality.
+
 ## SecureVault
 
 These BIG-IP only functions will use a BIG-IP's radius server to encrypt and decrypt JSON strings for you.
