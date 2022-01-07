@@ -152,8 +152,12 @@ describe('Tracer lib', function () {
             });
 
             it('should return a new span with default and specified tags', () => {
-                const span = tracer.startHttpSpan('/resources/{name}', '/resources/myResource',
-                    'post', { tags: { a: 'b', c: 'd' } });
+                const span = tracer.startHttpSpan(
+                    '/resources/{name}',
+                    '/resources/myResource',
+                    'post',
+                    { tags: { a: 'b', c: 'd' } }
+                );
                 assert.includeDeepMembers(span.tags, [
                     { key: 'span.kind', value: 'server' },
                     { key: 'component', value: 'net/http' },
@@ -243,7 +247,9 @@ describe('Tracer lib', function () {
             span.finish();
             // wait just a bit for tracer reporter to finish flushing
             // default interval is 1000 ms
-            return new Promise((resolve) => setTimeout(resolve, 1500))
+            return new Promise((resolve) => {
+                setTimeout(resolve, 1500);
+            })
                 .then(() => {
                     assert(spanReq, 'span request should be sent');
                     assert.isTrue(span.finished, 'span should be marked as finished');
