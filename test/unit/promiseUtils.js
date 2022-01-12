@@ -110,4 +110,33 @@ describe('promiseUtil', () => {
             assert.strictEqual(passedArg2, 'world');
         });
     });
+
+    describe('.series', () => {
+        it('should call functions in a series and return results in order', () => {
+            const called = [];
+            const func1 = () => new Promise((resolve) => {
+                setTimeout(() => {
+                    called.push(1);
+                    resolve(10);
+                }, 50);
+            });
+            const func2 = () => new Promise((resolve) => {
+                setTimeout(() => {
+                    called.push(2);
+                    resolve(20);
+                }, 10);
+            });
+            const func3 = () => new Promise((resolve) => {
+                setTimeout(() => {
+                    called.push(3);
+                    resolve(30);
+                }, 20);
+            });
+            return promiseUtil.series([func1, func2, func3])
+                .then((results) => {
+                    assert.deepStrictEqual(called, [1, 2, 3]);
+                    assert.deepStrictEqual(results, [10, 20, 30]);
+                });
+        });
+    });
 });
