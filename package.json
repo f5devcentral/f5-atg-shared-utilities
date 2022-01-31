@@ -15,7 +15,7 @@
     "mocha": "^9.2.0",
     "nock": "10.0.0",
     "nyc": "^15.1.0",
-    "sinon": "^7.5.0"
+    "sinon": "7.5.0"
   },
   "eslintConfig": {
     "extends": "@f5devcentral/eslint-config-f5-atg",
