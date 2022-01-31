@@ -50,6 +50,6 @@
   "license": "Apache-2.0",
   "optionalDependencies": {
     "error": "7.2.1",
-    "jaeger-client": "^3.18.1"
+    "jaeger-client": "3.18.1"
   }
 }
