@@ -1,55 +1,55 @@
 {
-    "name": "@f5devcentral/atg-shared-utilities",
-    "version": "0.4.1",
-    "scripts": {
-        "lint": "eslint .",
-        "test": "mocha test/unit/ --recursive",
-        "coverage": "nyc npm test"
-    },
-    "devDependencies": {
-        "@f5devcentral/eslint-config-f5-atg": "latest",
-        "chai": "^4.3.4",
-        "chai-as-promised": "^7.1.1",
-        "eslint": "^7.32.0",
-        "eslint-plugin-import": "^2.25.4",
-        "mocha": "^9.1.3",
-        "nock": "10.0.0",
-        "nyc": "^15.1.0",
-        "sinon": "7.5.0"
-    },
-    "eslintConfig": {
-        "extends": "@f5devcentral/eslint-config-f5-atg",
-        "rules": {
-            "func-names": "off"
-        }
-    },
-    "nyc": {
-        "reporter": [
-            "html",
-            "text",
-            "json-summary"
-        ],
-        "exclude": [
-            "gulpfile.js",
-            "coverage/**",
-            "test/**",
-            "**/node_modules/**",
-            "**/dist/**"
-        ]
-    },
-    "description": "This project holds a number of generic utility functions that can be shared across the F5 Automation Toolchain projects.",
-    "main": "index.js",
-    "directories": {
-        "test": "test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:f5devcentral/f5-atg-shared-utilities.git"
-    },
-    "author": "F5 Networks",
-    "license": "Apache-2.0",
-    "optionalDependencies": {
-        "error": "7.2.1",
-        "jaeger-client": "^3.18.1"
+  "name": "@f5devcentral/atg-shared-utilities",
+  "version": "0.4.2",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "mocha test/unit/ --recursive",
+    "coverage": "nyc npm test"
+  },
+  "devDependencies": {
+    "@f5devcentral/eslint-config-f5-atg": "^0.1.7",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.4",
+    "mocha": "^9.2.0",
+    "nock": "10.0.0",
+    "nyc": "^15.1.0",
+    "sinon": "7.5.0"
+  },
+  "eslintConfig": {
+    "extends": "@f5devcentral/eslint-config-f5-atg",
+    "rules": {
+      "func-names": "off"
     }
+  },
+  "nyc": {
+    "reporter": [
+      "html",
+      "text",
+      "json-summary"
+    ],
+    "exclude": [
+      "gulpfile.js",
+      "coverage/**",
+      "test/**",
+      "**/node_modules/**",
+      "**/dist/**"
+    ]
+  },
+  "description": "This project holds a number of generic utility functions that can be shared across the F5 Automation Toolchain projects.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:f5devcentral/f5-atg-shared-utilities.git"
+  },
+  "author": "F5 Networks",
+  "license": "Apache-2.0",
+  "optionalDependencies": {
+    "error": "7.2.1",
+    "jaeger-client": "^3.18.1"
+  }
 }
