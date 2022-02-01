@@ -30,6 +30,10 @@ chai.use(chaiAsPromised);
 const assert = chai.assert;
 
 describe('Tracer lib', function () {
+    if (process.versions.node.split('.')[0] < 6) {
+        return; // versions of Jaeger > 3.18.1 do NOT work on node 4
+    }
+
     this.timeout(6000);
     let tracer;
     let spanReq;
