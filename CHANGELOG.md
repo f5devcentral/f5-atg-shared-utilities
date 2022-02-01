@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.4.3] - 2022-02-01
+### Fixed
+- Update packages
+
 ## [0.4.2] - 2022-01-28
 ### Changed
 - Update packages
