@@ -12,6 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.4.4] - 2022-03-16
+### Added
+- Utilized atg-shared-templates
+
+### Changed
+- Update packages
+
 ## [0.4.3] - 2022-02-01
 ### Fixed
 - Update packages

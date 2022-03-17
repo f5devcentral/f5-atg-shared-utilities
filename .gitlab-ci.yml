@@ -1,8 +1,18 @@
 # AT generally uses node 4.8.0 and so this will too
 stages:
+    - atg-shared-checks
     - lint
     - test
     - publish
+
+# This inherits all the jobs defined in the parent template
+# Override variables in this project as needed
+include:
+# adds atg-shared-checks stage and jobs
+# adds atg_shared_checks_result job to test stage
+  - project: automation-toolchain/atg-shared-templates
+    file: security/base.gitlab-ci.yml
+    ref: v1.1.3
 
 lint:
     image: $DOCKER_URL/node:12-buster
