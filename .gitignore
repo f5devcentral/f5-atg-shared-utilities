@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 *.swp
 node_modules
+.vscode
 
 # ignore npm-debug
 **/npm-debug.log
