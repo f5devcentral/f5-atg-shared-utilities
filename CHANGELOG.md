@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.4.9] 2022-10-06
+### Added
+
+### Fixed
+- AUTOTOOL-3505: handle wildcard addresses in minimizeIP
+
+### Changed
+
+### Removed
+
 ## [0.4.8]
 ### Added
 
