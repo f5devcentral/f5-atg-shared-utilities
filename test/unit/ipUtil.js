@@ -29,6 +29,11 @@ describe('IpUitil', () => {
             assert.strictEqual(ipUtil.minimizeIP(''), '');
         });
 
+        it('should return wildcard addresses', () => {
+            assert.strictEqual(ipUtil.minimizeIP('any'), 'any');
+            assert.strictEqual(ipUtil.minimizeIP('any6'), 'any6');
+        });
+
         it('should return valid IPv4 addresses', () => {
             assert.strictEqual(ipUtil.minimizeIP('0.0.0.0/24'), '0.0.0.0/24');
         });
@@ -44,6 +49,10 @@ describe('IpUitil', () => {
 
         it('should return valid IPv6 address from IPv4-Mapped address', () => {
             assert.strictEqual(ipUtil.minimizeIP('::ffff:192.0.3.47'), '::ffff:c000:32f');
+        });
+
+        it('should return valid IPv6 address from IPv4-Mapped address', () => {
+            assert.strictEqual(ipUtil.minimizeIP('::ffff:10.0.0.1'), '::ffff:a00:1');
         });
 
         it('should return valid IPv4 address from an octal IP', () => {

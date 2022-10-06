@@ -40,7 +40,10 @@ class IpUtil {
         let middle;
         let right;
 
-        if ((ip === undefined) || (ip === '::') || (ip === '')) { return ip; }
+        if ((ip === undefined) || (ip === '::') || (ip === '')
+            || (ip === 'any') || (ip === 'any6')) {
+            return ip;
+        }
 
         cidr = ip.split('/'); ip = cidr[0]; cidr = cidr[1];
         rd = ip.split('%'); ip = rd[0]; rd = rd[1];
