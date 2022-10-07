@@ -32,6 +32,9 @@ describe('IpUitil', () => {
         it('should return wildcard addresses', () => {
             assert.strictEqual(ipUtil.minimizeIP('any'), 'any');
             assert.strictEqual(ipUtil.minimizeIP('any6'), 'any6');
+            assert.strictEqual(ipUtil.minimizeIP('any%2222'), 'any%2222');
+            assert.strictEqual(ipUtil.minimizeIP('any6%2222'), 'any6%2222');
+            assert.strictEqual(ipUtil.minimizeIP('::%2222'), '::%2222');
         });
 
         it('should return valid IPv4 addresses', () => {
