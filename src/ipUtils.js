@@ -41,7 +41,7 @@ class IpUtil {
         let right;
 
         if ((ip === undefined) || (ip === '::') || (ip === '')
-            || (ip === 'any') || (ip === 'any6')) {
+            || (ip.includes('any')) || (ip.includes('any6'))) {
             return ip;
         }
 
