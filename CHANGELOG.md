@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.5.0] 2022-12-08
+### Added
+
+### Fixed
+- Get primary admin user from system for http requests to port 8100
+
+### Changed
+
+### Removed
+
 ## [0.4.11] 2022-11-22
 ### Added
 
