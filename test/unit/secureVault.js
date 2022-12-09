@@ -24,11 +24,20 @@ const nock = require('nock');
 const sinon = require('sinon');
 
 const secureVault = require('../../src/secureVault');
+const tmshUtil = require('../../src/tmshUtils');
 
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
 describe('SecureVault', () => {
+    beforeEach(() => {
+        sinon.stub(tmshUtil, 'executeTmshCommand').resolves(
+            {
+                value: '"admin"'
+            }
+        );
+    });
+
     afterEach(() => {
         sinon.restore();
         nock.cleanAll();

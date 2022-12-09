@@ -20,6 +20,8 @@ const https = require('https');
 const http = require('http');
 const urlParse = require('url').parse;
 
+const tmshUtil = require('./tmshUtils');
+
 /* eslint-disable no-console */
 const DEBUG = false;
 
@@ -47,13 +49,6 @@ class Request {
             reqOpts.headers = {};
         }
 
-        if (reqOpts.protocol === 'http:') {
-            protocol = http;
-            if (reqOpts.port === 8100 && !reqOpts.auth) {
-                reqOpts.auth = 'admin:';
-            }
-        }
-
         if ((typeof body !== 'undefined')
             && (['GET', 'HEAD'].indexOf(reqOpts.method) < 0)) {
             jsonBody = JSON.stringify(body);
@@ -68,56 +63,69 @@ class Request {
             });
             console.log(body);
         }
-        return new Promise((resolve, reject) => {
-            const request = protocol.request(reqOpts, (response) => {
-                let buffer = '';
-                response.on('data', (chunk) => {
-                    buffer += chunk;
-                });
-                response.on('end', () => {
-                    if (DEBUG) {
-                        console.log(`\nResponse from https://${reqOpts.host}/${reqOpts.path}:`);
-                    }
-                    if (buffer.length === 0) {
-                        resolve('');
-                        return;
-                    }
-                    if (response.statusCode === 204) {
-                        if (DEBUG) {
-                            console.log(response.statusCode);
-                        }
-                        resolve('');
-                        return;
-                    }
 
-                    if (response.statusCode >= 400) {
-                        reject(new Error(`${response.statusCode} ${buffer}`));
-                    }
-                    try {
-                        if (DEBUG) {
-                            console.log(response.statusCode, JSON.parse(buffer));
-                        }
-                        resolve(JSON.parse(buffer));
-                    } catch (error) {
-                        reject(new Error(`body is not JSON: ${buffer}`));
-                    }
-                });
-            });
-
-            request.on('error', (e) => {
-                reject(e);
-            });
-
-            if (jsonBody) {
-                try {
-                    request.write(jsonBody);
-                } catch (err) {
-                    reject(err);
-                }
+        let promise = Promise.resolve();
+        if (reqOpts.protocol === 'http:') {
+            protocol = http;
+            if (reqOpts.port === 8100 && !reqOpts.auth) {
+                promise = getPrimaryAdminUser()
+                    .then((primaryAdminUser) => {
+                        reqOpts.auth = `${primaryAdminUser}:`;
+                    });
             }
+        }
 
-            request.end();
-        });
+        return promise
+            .then(() => new Promise((resolve, reject) => {
+                const request = protocol.request(reqOpts, (response) => {
+                    let buffer = '';
+                    response.on('data', (chunk) => {
+                        buffer += chunk;
+                    });
+                    response.on('end', () => {
+                        if (DEBUG) {
+                            console.log(`\nResponse from https://${reqOpts.host}/${reqOpts.path}:`);
+                        }
+                        if (buffer.length === 0) {
+                            resolve('');
+                            return;
+                        }
+                        if (response.statusCode === 204) {
+                            if (DEBUG) {
+                                console.log(response.statusCode);
+                            }
+                            resolve('');
+                            return;
+                        }
+
+                        if (response.statusCode >= 400) {
+                            reject(new Error(`${response.statusCode} ${buffer}`));
+                        }
+                        try {
+                            if (DEBUG) {
+                                console.log(response.statusCode, JSON.parse(buffer));
+                            }
+                            resolve(JSON.parse(buffer));
+                        } catch (error) {
+                            reject(new Error(`body is not JSON: ${buffer}`));
+                        }
+                    });
+                });
+
+                request.on('error', (e) => {
+                    reject(e);
+                });
+
+                if (jsonBody) {
+                    try {
+                        request.write(jsonBody);
+                    } catch (err) {
+                        reject(err);
+                    }
+                }
+
+                request.end();
+            }));
     }
 
     static prepareUrl(url) {
@@ -127,6 +135,17 @@ class Request {
         }
         return parsed;
     }
+}
+
+function getPrimaryAdminUser() {
+    return tmshUtil.executeTmshCommand('list sys db systemauth.primaryadminuser')
+        .then((result) => {
+            if (!result || !result.value) {
+                return Promise.reject(new Error('Unable to get primary admin user'));
+            }
+            const adminUser = result.value.replace(/"/g, '');
+            return Promise.resolve(adminUser);
+        });
 }
 
 module.exports = Request;

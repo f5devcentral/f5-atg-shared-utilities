@@ -17,14 +17,17 @@
 'use strict';
 
 const assert = require('assert');
+const http = require('http');
 const https = require('https');
 const sinon = require('sinon');
 const nock = require('nock');
 
 const request = require('../../src/request');
+const tmshUtil = require('../../src/tmshUtils');
 
 describe('Request', () => {
     beforeEach(() => {
+        sinon.spy(http, 'request');
         sinon.spy(https, 'request');
         nock('https://localhost')
             .post('/foo')
@@ -34,6 +37,85 @@ describe('Request', () => {
     afterEach(() => {
         sinon.restore();
         nock.cleanAll();
+    });
+
+    describe('auth', () => {
+        beforeEach(() => {
+            sinon.stub(tmshUtil, 'executeTmshCommand').resolves(
+                {
+                    value: '"myPrimaryAdminUser"'
+                }
+            );
+
+            nock('http://localhost:8100')
+                .get('/foo')
+                .reply(200, {});
+
+            nock('https://localhost:8100')
+                .get('/foo')
+                .reply(200, {});
+
+            nock('http://localhost:8101')
+                .get('/foo')
+                .reply(200, {});
+        });
+
+        it('should set auth to primary admin user when using port 8100 with http', () => request.send(
+            {
+                protocol: 'http:',
+                host: 'localhost',
+                port: 8100,
+                method: 'GET',
+                path: '/foo'
+            }
+        )
+            .then(() => {
+                assert.strictEqual(http.request.calledOnce, true);
+                assert.deepEqual(http.request.getCall(0).args[0].auth, 'myPrimaryAdminUser:');
+            }));
+
+        it('should not touch auth when auth is specified', () => request.send(
+            {
+                protocol: 'http:',
+                host: 'localhost',
+                port: 8100,
+                method: 'GET',
+                path: '/foo',
+                auth: 'admin:'
+            }
+        )
+            .then(() => {
+                assert.strictEqual(http.request.calledOnce, true);
+                assert.deepEqual(http.request.getCall(0).args[0].auth, 'admin:');
+            }));
+
+        it('should not touch auth when not using port 8100 with http', () => request.send(
+            {
+                protocol: 'http:',
+                host: 'localhost',
+                port: 8101,
+                method: 'GET',
+                path: '/foo'
+            }
+        )
+            .then(() => {
+                assert.strictEqual(http.request.calledOnce, true);
+                assert.deepEqual(http.request.getCall(0).args[0].auth, undefined);
+            }));
+
+        it('should not touch auth when using port 8100 with https', () => request.send(
+            {
+                protocol: 'https:',
+                host: 'localhost',
+                port: 8100,
+                method: 'GET',
+                path: '/foo'
+            }
+        )
+            .then(() => {
+                assert.strictEqual(https.request.calledOnce, true);
+                assert.deepEqual(https.request.getCall(0).args[0].auth, undefined);
+            }));
     });
 
     it('should set Content-Length header if there is a body', () => {
