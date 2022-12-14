@@ -35,7 +35,7 @@ function parseTmshResponse(response) {
 
 function executeTmshCommand(command, flags) {
     return new Promise((resolve, reject) => {
-        const commandName = '/bin/tmsh';
+        const commandName = '/usr/bin/tmsh';
         const commandArgs = (flags || ['-a']).concat(command.split(' '));
         let result = '';
         let error = '';
