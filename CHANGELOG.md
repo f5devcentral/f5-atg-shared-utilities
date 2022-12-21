@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.5.2] 2022-12-20
+### Added
+
+### Fixed
+
+### Changed
+- Handle special F5 addresses (any, route domain, etc) in ipUtils.splitAddress
+
+### Removed
+
 ## [0.5.1] 2022-12-08
 ### Added
 

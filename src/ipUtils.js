@@ -176,12 +176,40 @@ class IpUtil {
      * @returns {Array}
      */
     static splitAddress(combined) {
-        if (!(combined.indexOf('.') >= 0 && combined.indexOf(':') >= 0)) {
-            return [combined, undefined];
+        let isAnyV4;
+        let isAnyV6;
+        if (combined.startsWith('any6')) {
+            isAnyV6 = true;
+            combined = combined.replace('any6', '::');
+        } else if (combined.startsWith('any')) {
+            isAnyV4 = true;
+            combined = combined.replace('any', '0.0.0.0');
         }
-        const port = combined.match(/[.:]?[0-9]+$/)[0];
-        const address = combined.replace(port, '');
-        return [address, port.slice(1)];
+
+        // If there is no port, we need something that we can find with the
+        // regex below. At this point it doesn't matter that the separator matches
+        // the IP type
+        if (!(combined.indexOf('.') >= 0 && combined.indexOf(':') >= 0)) {
+            combined += ':NO_PORT';
+        }
+
+        let port = combined.match(/[.:]?[0-9]+$/);
+        let address;
+        if (port) {
+            port = port[0];
+            address = combined.replace(port, '');
+        } else {
+            address = combined;
+            address = address.replace(':NO_PORT', '');
+        }
+
+        if (isAnyV4) {
+            address = address.replace('0.0.0.0', 'any');
+        } else if (isAnyV6) {
+            address = address.replace('::', 'any6');
+        }
+
+        return [address, port ? port.slice(1) : undefined];
     }
 
     /**
@@ -291,6 +319,10 @@ class IpUtil {
         if (address === 'any') {
             address = '0.0.0.0';
         }
+        if (address === 'any6') {
+            address = '::';
+        }
+
         address = this.minimizeIP(address) || '';
         const parsedIp = address.match(/([a-zA-Z0-9.:]+)(%(\d+))?(\/(\d+))?/) || [];
 
