@@ -178,15 +178,34 @@ describe('IpUitil', () => {
         function assertSplit(string, result) {
             assert.deepStrictEqual(ipUtil.splitAddress(string), result, string);
         }
-        it('should split IPv4 addresses', () => {
-            assertSplit('127.0.0.1:80', ['127.0.0.1', '80']);
-        });
-        it('should split IPv6 addresses', () => {
-            assertSplit('::1.80', ['::1', '80']);
-            assertSplit('2001:0db8:85a3:0000::8a2e:0370:7334.80', ['2001:0db8:85a3:0000::8a2e:0370:7334', '80']);
-        });
-        it('should handle no port', () => {
-            assertSplit('127.0.0.1', ['127.0.0.1', undefined]);
+
+        const testCases = [
+            ['IPv4', '127.0.0.1:80', ['127.0.0.1', '80']],
+            ['IPv6 ::', '::1.80', ['::1', '80']],
+            ['IPv6', '2001:0db8:85a3:0000::8a2e:0370:7334.80', ['2001:0db8:85a3:0000::8a2e:0370:7334', '80']],
+            ['any', 'any:80', ['any', '80']],
+            ['any6', 'any6.80', ['any6', '80']],
+            ['0.0.0.0', '0.0.0.0:80', ['0.0.0.0', '80']],
+            ['::', '::.80', ['::', '80']],
+            ['no port IPv4', '127.0.0.1', ['127.0.0.1', undefined]],
+            ['no port simple IPv6', '::1', ['::1', undefined]],
+            ['no port IPv6', '2001:0db8:85a3:0000:8a2e:0370:7334', ['2001:0db8:85a3:0000:8a2e:0370:7334', undefined]],
+            ['no port any', 'any', ['any', undefined]],
+            ['no port any6', 'any6', ['any6', undefined]],
+            ['no port 0.0.0.0', '0.0.0.0', ['0.0.0.0', undefined]],
+            ['no port ::', '::', ['::', undefined]],
+            ['route domain', '127.0.0.1%123:80', ['127.0.0.1%123', '80']],
+            ['route domain IPv6', '::1%123.80', ['::1%123', '80']],
+            ['route domain no port', '127.0.0.1%123', ['127.0.0.1%123', undefined]],
+            ['route domain IPv6 no port', '::1%123', ['::1%123', undefined]],
+            ['route domain any no port', 'any%123', ['any%123', undefined]],
+            ['route domain any6 no port', 'any6%123', ['any6%123', undefined]]
+        ];
+
+        testCases.forEach((testCase) => {
+            it(testCase[0], () => {
+                assertSplit(testCase[1], testCase[2]);
+            });
         });
     });
 
@@ -312,6 +331,16 @@ describe('IpUitil', () => {
                     cidr: '0',
                     netmask: 'any',
                     ipWithRoute: '0.0.0.0'
+                }
+            },
+            {
+                address: 'any6',
+                expected: {
+                    ip: '::',
+                    routeDomain: '',
+                    cidr: '0',
+                    netmask: 'any6',
+                    ipWithRoute: '::'
                 }
             },
             {
