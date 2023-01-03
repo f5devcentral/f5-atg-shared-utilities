@@ -63,6 +63,7 @@ coverage:
     artifacts:
         paths:
             - coverage
+    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 pages:
   stage: publish
