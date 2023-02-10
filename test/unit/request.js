@@ -31,7 +31,11 @@ describe('Request', () => {
         sinon.spy(https, 'request');
         nock('https://localhost')
             .post('/foo')
-            .reply(200, {});
+            .reply(200, { hello: 'world' });
+
+        nock('https://localhost')
+            .post('/bar')
+            .reply(200, '0123456789abcdef');
     });
 
     afterEach(() => {
@@ -137,6 +141,63 @@ describe('Request', () => {
                     https.request.getCall(0).args[0].headers['Content-Length'],
                     JSON.stringify(body).length
                 );
+            });
+    });
+
+    it('should return parsed JSON if content header is application/json', () => {
+        const expectedBody = {
+            hello: 'world'
+        };
+
+        return request.send(
+            {
+                protocol: 'https:',
+                host: 'localhost',
+                path: '/foo',
+                method: 'POST'
+            }, 'data'
+        )
+            .then((responseBody) => {
+                assert.deepStrictEqual(responseBody, expectedBody);
+            });
+    });
+
+    it('should return raw data if content header is not application/json', () => {
+        const expectedBody = '0123456789abcdef';
+
+        return request.send(
+            {
+                protocol: 'https:',
+                host: 'localhost',
+                path: '/bar',
+                method: 'POST'
+            }, 'data'
+        )
+            .then((responseBody) => {
+                assert.deepStrictEqual(responseBody, expectedBody);
+            });
+    });
+
+    it('should respond with useful JSON parsing error', () => {
+        nock.cleanAll();
+
+        nock('https://localhost')
+            .post('/bar')
+            .reply(200, '0123456789abcdef', { 'content-type': 'application/json' });
+
+        return request.send(
+            {
+                protocol: 'https:',
+                host: 'localhost',
+                path: '/bar',
+                method: 'POST'
+            }, 'data'
+        )
+            .then(() => {
+                assert.fail('expected failure');
+            })
+            .catch((error) => {
+                assert.strictEqual(error.message, 'body is not JSON: 0123456789abcdef');
             });
     });
 });
