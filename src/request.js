@@ -38,7 +38,7 @@ class Request {
      * @param {number} options.port
      * @param {string} options.auth - 'user:'
      * @param {object} body
-     * @returns {object}
+     * @returns {Promise} Promise object that resolves with the response body
      */
     static send(options, body) {
         const reqOpts = JSON.parse(JSON.stringify(options));
@@ -99,16 +99,32 @@ class Request {
                         }
 
                         if (response.statusCode >= 400) {
-                            reject(new Error(`${response.statusCode} ${buffer}`));
-                        }
-                        try {
                             if (DEBUG) {
-                                console.log(response.statusCode, JSON.parse(buffer));
+                                console.error(response.statusCode, buffer);
                             }
-                            resolve(JSON.parse(buffer));
-                        } catch (error) {
-                            reject(new Error(`body is not JSON: ${buffer}`));
+                            reject(new Error(`${response.statusCode} ${buffer}`));
+                            return;
                         }
+
+                        const contentType = response.headers['content-type'];
+                        let data = buffer;
+
+                        if (contentType === 'application/json') {
+                            try {
+                                data = JSON.parse(buffer);
+                            } catch (error) {
+                                if (DEBUG) {
+                                    console.error(response.statusCode, buffer);
+                                }
+                                reject(new Error(`body is not JSON: ${buffer}`));
+                                return;
+                            }
+                        }
+
+                        if (DEBUG) {
+                            console.log(response.statusCode, data);
+                        }
+                        resolve(data);
                     });
                 });
 
