@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Changed
-- AUTOTOOL-3602: request.send parses response body based on content header
 
 ### Removed
+
+## [0.5.5] - 2023-02-15
+### Changed
+- AUTOTOOL-3602: request.send parses response body based on content header
 
 ## [0.5.4] - 2023-01-05
 ### Changed
