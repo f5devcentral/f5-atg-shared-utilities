@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.5.6] - 2023-02-17
+### Fixed
+- request.send skips parsing JSON response when charset is included in content-type header
+
 ## [0.5.5] - 2023-02-15
 ### Changed
 - AUTOTOOL-3602: request.send parses response body based on content header

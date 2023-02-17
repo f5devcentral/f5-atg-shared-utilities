@@ -106,10 +106,10 @@ class Request {
                             return;
                         }
 
-                        const contentType = response.headers['content-type'];
+                        const contentType = response.headers['content-type'] || '';
                         let data = buffer;
 
-                        if (contentType === 'application/json') {
+                        if (contentType.includes('application/json')) {
                             try {
                                 data = JSON.parse(buffer);
                             } catch (error) {
