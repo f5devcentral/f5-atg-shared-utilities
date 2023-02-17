@@ -31,7 +31,7 @@ describe('Request', () => {
         sinon.spy(https, 'request');
         nock('https://localhost')
             .post('/foo')
-            .reply(200, { hello: 'world' });
+            .reply(200, { hello: 'world' }, { 'content-type': 'application/json; charset=utf-8' });
 
         nock('https://localhost')
             .post('/bar')
@@ -183,7 +183,7 @@ describe('Request', () => {
 
         nock('https://localhost')
             .post('/bar')
-            .reply(200, '0123456789abcdef', { 'content-type': 'application/json' });
+            .reply(200, '0123456789abcdef', { 'content-type': 'application/json; charset=utf-8' });
 
         return request.send(
             {
