@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.5.7] - 2023-03-27
+### Changed
+- Update packages
+
 ## [0.5.6] - 2023-02-17
 ### Fixed
 - request.send skips parsing JSON response when charset is included in content-type header
