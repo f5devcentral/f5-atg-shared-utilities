@@ -51,7 +51,7 @@ describe('IpUitil', () => {
         });
 
         it('should return valid IPv6 address from IPv4-Mapped address', () => {
-            assert.strictEqual(ipUtil.minimizeIP('::ffff:192.0.3.47'), '::ffff:c000:32f');
+            assert.strictEqual(ipUtil.minimizeIP('::ffff:192.0.3.47'), '::ffff:c000:32f'); // gitleaks:allow
         });
 
         it('should return valid IPv6 address from IPv4-Mapped address', () => {
@@ -59,9 +59,9 @@ describe('IpUitil', () => {
         });
 
         it('should return valid IPv4 address from an octal IP', () => {
-            assert.strictEqual(ipUtil.minimizeIP('0127.0.0.1'), '87.0.0.1');
-            assert.strictEqual(ipUtil.minimizeIP('0177.0.0.01'), '127.0.0.1');
-            assert.strictEqual(ipUtil.minimizeIP('010.010.255.255'), '8.8.255.255');
+            assert.strictEqual(ipUtil.minimizeIP('0127.0.0.1'), '87.0.0.1'); // gitleaks:allow
+            assert.strictEqual(ipUtil.minimizeIP('0177.0.0.01'), '127.0.0.1'); // gitleaks:allow
+            assert.strictEqual(ipUtil.minimizeIP('010.010.255.255'), '8.8.255.255'); // gitleaks:allow
         });
     });
 
@@ -145,7 +145,7 @@ describe('IpUitil', () => {
         });
 
         it('should pass on IPv4-mapped IPv6 addresses', () => {
-            assertCheck('::FFFF:129.144.52.38', true);
+            assertCheck('::FFFF:129.144.52.38', true); // gitleaks:allow
         });
 
         it('should pass with route domain', () => {
@@ -216,19 +216,19 @@ describe('IpUitil', () => {
                 cidr: '/0'
             },
             {
-                mask: '254.0.0.0',
+                mask: '254.0.0.0', // gitleaks:allow
                 cidr: '/7'
             },
             {
-                mask: '255.224.0.0',
+                mask: '255.224.0.0', // gitleaks:allow
                 cidr: '/11'
             },
             {
-                mask: '255.255.255.0',
+                mask: '255.255.255.0', // gitleaks:allow
                 cidr: '/24'
             },
             {
-                mask: '255.255.255.248',
+                mask: '255.255.255.248', // gitleaks:allow
                 cidr: '/29'
             },
             {
@@ -344,33 +344,33 @@ describe('IpUitil', () => {
                 }
             },
             {
-                address: '123.123.123.123%123',
+                address: '192.0.2.123%123',
                 expected: {
-                    ip: '123.123.123.123',
+                    ip: '192.0.2.123',
                     routeDomain: '%123',
                     cidr: '',
                     netmask: '255.255.255.255',
-                    ipWithRoute: '123.123.123.123%123'
+                    ipWithRoute: '192.0.2.123%123'
                 }
             },
             {
-                address: '123.123.123.123%2222/24',
+                address: '192.0.2.123%2222/24',
                 expected: {
-                    ip: '123.123.123.123',
+                    ip: '192.0.2.123',
                     routeDomain: '%2222',
                     cidr: '24',
                     netmask: '255.255.255.0',
-                    ipWithRoute: '123.123.123.123%2222'
+                    ipWithRoute: '192.0.2.123%2222'
                 }
             },
             {
-                address: '1.1.1.1%0',
+                address: '192.0.2.1%0',
                 expected: {
-                    ip: '1.1.1.1',
+                    ip: '192.0.2.1',
                     routeDomain: '',
                     cidr: '',
                     netmask: '255.255.255.255',
-                    ipWithRoute: '1.1.1.1'
+                    ipWithRoute: '192.0.2.1'
                 }
             },
             {
@@ -429,17 +429,17 @@ describe('IpUitil', () => {
             },
             {
                 cidr: '',
-                ip: '1.1.1.1',
+                ip: '192.0.2.1',
                 expected: '255.255.255.255'
             },
             {
                 cidr: '24',
-                ip: '1.1.1.1',
+                ip: '192.0.2.1',
                 expected: '255.255.255.0'
             },
             {
                 cidr: '13',
-                ip: '1.1.1.1',
+                ip: '192.0.2.1',
                 expected: '255.248.0.0'
             },
             {
@@ -449,12 +449,12 @@ describe('IpUitil', () => {
             },
             {
                 cidr: '0',
-                ip: '0.0.0.0',
+                ip: '192.0.2.0',
                 expected: 'any'
             },
             {
                 cidr: '32',
-                ip: '1.1.1.1',
+                ip: '192.0.2.1',
                 expected: '255.255.255.255'
             },
             {
