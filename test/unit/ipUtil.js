@@ -51,7 +51,7 @@ describe('IpUitil', () => {
         });
 
         it('should return valid IPv6 address from IPv4-Mapped address', () => {
-            assert.strictEqual(ipUtil.minimizeIP('::ffff:192.0.3.47'), '::ffff:c000:32f');
+            assert.strictEqual(ipUtil.minimizeIP('::ffff:192.0.3.47'), '::ffff:c000:32f'); // gitleaks:allow
         });
 
         it('should return valid IPv6 address from IPv4-Mapped address', () => {
