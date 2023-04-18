@@ -13,13 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ## [0.6.0] - 2023-04-18
-### Added
-- Add a RELEASE tag to tracing data
-
 ### Changed
 - AUTOTOOL-3108: Reduce package size
 
 ## [0.5.7] - 2023-03-27
+### Added
+- Add a RELEASE tag to tracing data
+
 ### Changed
 - Update packages
 
