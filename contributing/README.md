@@ -83,8 +83,6 @@ Create from = "main"
 
 Message = "Release version vMajor.Minor.Patch-Build"
 
-Release notes = CHANGELOG entry for this version
-
 Click **Create tag**
 
 ### Push main to GitHub
@@ -94,7 +92,7 @@ Click **Create tag**
 Info on getting this setup: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 
 Add a remote for GitHub\
-*git remote add github git@github.com:f5devcentral/f5-atg-shared-utilities.git* gitleaks:allow
+*git remote add github git@github.com:f5devcentral/f5-atg-shared-utilities.git*
 
 Push the current branch to GitHub\
 *git push github*
