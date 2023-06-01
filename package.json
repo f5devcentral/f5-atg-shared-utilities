@@ -1,10 +1,13 @@
 {
     "name": "@f5devcentral/atg-shared-utilities",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "scripts": {
         "lint": "eslint .",
         "test": "mocha test/unit/ --recursive",
         "coverage": "nyc npm test"
+    },
+    "dependencies": {
+        "big-integer": "^1.6.51"
     },
     "devDependencies": {
         "@f5devcentral/eslint-config-f5-atg": "latest",

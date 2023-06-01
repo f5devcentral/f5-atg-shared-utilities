@@ -16,6 +16,8 @@
 
 'use strict';
 
+const bigInt = require('big-integer');
+
 // test if string is an f5 IP, which means valid IPv4 or IPv6
 // with optional %route-domain and/or /mask-length appended.
 const IPv4rex = /^(((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)[.]){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d))(%(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|[1-5]\d{4}|[1-9]\d{3}|[1-9]\d{2}|[1-9]?\d))?(\x2f(3[012]|2\d|1\d|\d))?$/;
@@ -342,6 +344,91 @@ class IpUtil {
             netmask,
             ipWithRoute
         };
+    }
+
+    /**
+     * Takes a string representation of an IP v4 address and returns a string representation of this IP as a number
+     *
+     * @param {string} ip - An IP v4 address
+     * @returns {string} A representation of the given IP as a single number
+     */
+    static ipV4ToNumberString(ip) {
+        const parts = ip.split('.');
+
+        let result = parts[0] * Math.pow(256, 3); // eslint-disable-line no-restricted-properties
+        result += parts[1] * Math.pow(256, 2); // eslint-disable-line no-restricted-properties
+        result += parts[2] * 256;
+        result += parts[3] * 1;
+        return result.toString();
+    }
+
+    /**
+     * Takes a string representation of an IP v6 address and returns a string representation of this IP as a number
+     *
+     * @param {string} ip - An IP v6 address
+     * @returns {string} A representation of the given IP as a single number
+     */
+    static ipV6ToNumberString(ip) {
+        const parts = [];
+        ip.split(':').forEach((block) => {
+            let binary = block ? parseInt(block, 16).toString(2) : '0';
+            while (binary.length < 16) {
+                binary = `0${binary}`;
+            }
+            parts.push(binary);
+        });
+        const binary = parts.join('');
+
+        return bigInt(binary, 2).toString();
+    }
+
+    /**
+     * Takes a string representation of an IP address and returns a string representation of this IP as a number
+     *
+     * @param {string} ip - An IP address
+     * @returns {string} A representation of the given IP as a single number
+     */
+    static ipToNumberString(ip) {
+        if (this.isIPv4(ip)) {
+            return this.ipV4ToNumberString(ip);
+        }
+        return this.ipV6ToNumberString(ip);
+    }
+
+    /**
+     * Determines if an IP address is between two other IP addresses
+     *
+     * @param {string} ip - The IP to test
+     * @param {string} lowEnd - The low end of the range of IP addresses to test
+     * @param {string} highEnd - The high end of the range of IP addresses to test
+     *
+     * @returns {boolean} true if ip is between the lowEnd and highEnd (inclusive). Otherwise returns false.
+     */
+    static isIPinRange(ip, lowEnd, highEnd) {
+        if (!this.isIPv4(ip) && !this.isIPv6(ip)) {
+            throw new Error('ip to test is not a valid IP');
+        }
+
+        if (!this.isIPv4(lowEnd) && !this.isIPv6(lowEnd)) {
+            throw new Error('lowEnd is not a valid IP');
+        }
+
+        if (!this.isIPv4(highEnd) && !this.isIPv6(highEnd)) {
+            throw new Error('highEnd is not a valid IP');
+        }
+
+        if (this.isIPv4(ip) && !(this.isIPv4(lowEnd) && this.isIPv4(highEnd))) {
+            throw new Error('All IPs must be of same type (IPv4 or IPv6');
+        } else if (this.isIPv6(ip) && !(this.isIPv6(lowEnd) && this.isIPv6(highEnd))) {
+            throw new Error('All IPs must be of same type (IPv4 or IPv6');
+        }
+
+        // Strip off CIDR and convert to a number
+        const ipString = this.ipToNumberString(ip.split('/')[0]);
+        const lowIpString = this.ipToNumberString(lowEnd);
+        const highIpString = this.ipToNumberString(highEnd);
+
+        return ipString >= lowIpString && ipString <= highIpString;
     }
 }
 
