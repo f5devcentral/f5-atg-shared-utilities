@@ -19,7 +19,7 @@
 const assert = require('assert');
 const ipUtil = require('../../src/ipUtils');
 
-describe('IpUitil', () => {
+describe('IpUtil', () => {
     describe('.minimizeIP', () => {
         it('should return an undefined when nothing is sent in', () => {
             assert.strictEqual(ipUtil.minimizeIP(), undefined);
@@ -174,11 +174,63 @@ describe('IpUitil', () => {
         });
     });
 
-    describe('.splitAddress', () => {
-        function assertSplit(string, result) {
-            assert.deepStrictEqual(ipUtil.splitAddress(string), result, string);
-        }
+    describe('.isIPinRange', () => {
+        // ['test name', ['test ip', 'low end', 'high end'], 'expected output']
+        const validTestCases = [
+            ['IPv4 too low', ['192.168.0.1', '192.168.0.2', '192.168.0.3'], false],
+            ['IPv4 too high', ['192.168.0.3', '192.168.0.1', '192.168.0.2'], false],
+            ['IPv4 too just right', ['192.168.0.2', '192.168.0.1', '192.168.0.3'], true],
+            ['IPv4 match low end', ['192.168.0.1', '192.168.0.1', '192.168.0.3'], true],
+            ['IPv4 match high end', ['192.168.0.3', '192.168.0.1', '192.168.0.3'], true],
+            ['IPv4 different blocks', ['192.168.5.1', '192.168.0.1', '192.168.10.1'], true],
+            ['IPv6 too low 1', ['2001:db7:dc75:365:220a:7c84:d796:6401', '2001:db7:dc75:365:220a:7c84:d796:6402', '2001:db7:dc75:365:220a:7c84:d796:6403'], false],
+            ['IPv6 too low 2', ['2001:db6:dc75:365:220a:7c84:d796:6401', '2001:db7:dc75:365:220a:7c84:d796:6401', '2001:db7:dc75:365:220a:7c84:d796:6401'], false],
+            ['IPv6 too high 1', ['2001:db7:dc75:365:220a:7c84:d796:6403', '2001:db7:dc75:365:220a:7c84:d796:6401', '2001:db7:dc75:365:220a:7c84:d796:6402'], false],
+            ['IPv6 too high 2', ['2001:db7:dc76:365:220a:7c84:d796:6401', '2001:db7:dc74:365:220a:7c84:d796:6401', '2001:db7:dc75:365:220a:7c84:d796:6401'], false],
+            ['IPv6 just right', ['2001:db7:dc75:365:220a:7c84:d796:6401', '2001:db7:dc74:365:220a:7c84:d796:6401', '2001:db8:dc75:365:220a:7c84:d796:6401'], true]
+        ];
 
+        validTestCases.forEach((testCase) => {
+            it(testCase[0], () => {
+                assert.deepStrictEqual(ipUtil.isIPinRange(testCase[1][0], testCase[1][1], testCase[1][2]), testCase[2], `${testCase[1]} failed`);
+            });
+        });
+
+        const errorTestCases = [
+            ['Bad low end', ['foo', '192.168.0.2', '192.168.0.3'], /ip to test is not a valid IP/],
+            ['Bad IP', ['192.168.0.2', 'foo', '192.168.0.3'], /lowEnd is not a valid IP/],
+            ['Bad high end', ['192.168.0.2', '192.168.0.3', 'foo'], /highEnd is not a valid IP/],
+            ['Different types', ['192.168.0.2', '192.168.0.3', '2001:db7:dc75:365:220a:7c84:d796:6401'], /All IPs must be of same type/]
+        ];
+
+        errorTestCases.forEach((testCase) => {
+            it(testCase[0], () => {
+                assert.throws(() => ipUtil.isIPinRange(testCase[1][0], testCase[1][1], testCase[1][2]), testCase[2]);
+            });
+        });
+    });
+
+    describe('.ipToNumberString', () => {
+        // ['test name', 'input', 'expected output']
+        const testCases = [
+            ['IPv4 localhost', '127.0.0.1', '2130706433'],
+            ['IPv4', '192.168.0.1', '3232235521'],
+            ['IPv4 any', '0.0.0.0', '0'],
+            ['IPv6 localhost', '::1', '1'],
+            ['IPv6', '2001:db7:dc75:365:220a:7c84:d796:6401', '42540766400282592856903984001653826561'],
+            ['IPv6 missing blocks', '2001:0db8:85a3:0000::8a2e:0370:7334', '42540766452641154071740215577757643572'],
+            ['IPv6 any', '::', '0']
+        ];
+
+        testCases.forEach((testCase) => {
+            it(testCase[0], () => {
+                assert.deepStrictEqual(ipUtil.ipToNumberString(testCase[1]), testCase[2], `${testCase[1]} failed`);
+            });
+        });
+    });
+
+    describe('.splitAddress', () => {
+        // ['test name', 'input', 'expected output']
         const testCases = [
             ['IPv4', '127.0.0.1:80', ['127.0.0.1', '80']],
             ['IPv6 ::', '::1.80', ['::1', '80']],
@@ -204,7 +256,7 @@ describe('IpUitil', () => {
 
         testCases.forEach((testCase) => {
             it(testCase[0], () => {
-                assertSplit(testCase[1], testCase[2]);
+                assert.deepStrictEqual(ipUtil.splitAddress(testCase[1]), testCase[2], `${testCase[1]} failed`);
             });
         });
     });
