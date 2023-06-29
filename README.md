@@ -68,12 +68,35 @@ This collection of utils focuses on generic functions useful to arrays.
 
 ### ensureArray(variable)
 
-This function will take a variable, convert it to an array (if it is not an array), and return it. If undefined, it will return `[]`.
+Takes a variable, converts it to an array (if it is not an array), and returns it. If undefined, it will return `[]`.
 
+### doesArrayContainAnyOf(array1, array2)
+
+Checks if any member of tArray is present in array.
+
+### doesArrayContain(array, target)
+
+Checks if any member of target is present in array.
+
+### insertAfterOrAtBeginning(array, target, item, comparison)
+
+Inserts an item after another item in an array or at the beginning of the array.
+
+### insertBeforeOrAtBeginning(array, target, item, comparison)
+
+Inserts an item before another item in an array or at the beginning of the array.
+
+### insertAfterOrAtEnd(array, target, item, comparison)
+
+Inserts an item after another item in an array or at the end of the array.
+
+### insertBeforeOrAtEnd(array, target, item, comparison)
+
+Inserts an item before another item in an array or at the end of the array.
 
 ## requestUtils
 
-This collection of utils is for sending http requests
+This collection of utils is for sending http requests.
 
 ### send(options, body)
 
