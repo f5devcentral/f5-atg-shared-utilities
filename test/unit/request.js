@@ -64,77 +64,79 @@ describe('Request', () => {
                 .reply(200, {});
         });
 
-        it('should set auth to primary admin user when using port 8100 with http', () => request.send(
-            {
+        it('should set auth to primary admin user when using port 8100 with http', () => {
+            const reqOpts = {
                 protocol: 'http:',
                 host: 'localhost',
                 port: 8100,
                 method: 'GET',
                 path: '/foo'
-            }
-        )
-            .then(() => {
-                assert.strictEqual(http.request.calledOnce, true);
-                assert.deepEqual(http.request.getCall(0).args[0].auth, 'myPrimaryAdminUser:');
-            }));
+            };
+            return request.send(reqOpts)
+                .then(() => {
+                    assert.strictEqual(http.request.calledOnce, true);
+                    assert.deepEqual(http.request.getCall(0).args[0].auth, 'myPrimaryAdminUser:');
+                });
+        });
 
-        it('should not touch auth when auth is specified', () => request.send(
-            {
+        it('should not touch auth when auth is specified', () => {
+            const reqOpts = {
                 protocol: 'http:',
                 host: 'localhost',
                 port: 8100,
                 method: 'GET',
                 path: '/foo',
                 auth: 'admin:'
-            }
-        )
-            .then(() => {
-                assert.strictEqual(http.request.calledOnce, true);
-                assert.deepEqual(http.request.getCall(0).args[0].auth, 'admin:');
-            }));
+            };
+            return request.send(reqOpts)
+                .then(() => {
+                    assert.strictEqual(http.request.calledOnce, true);
+                    assert.deepEqual(http.request.getCall(0).args[0].auth, 'admin:');
+                });
+        });
 
-        it('should not touch auth when not using port 8100 with http', () => request.send(
-            {
+        it('should not touch auth when not using port 8100 with http', () => {
+            const reqOpts = {
                 protocol: 'http:',
                 host: 'localhost',
                 port: 8101,
                 method: 'GET',
                 path: '/foo'
-            }
-        )
-            .then(() => {
-                assert.strictEqual(http.request.calledOnce, true);
-                assert.deepEqual(http.request.getCall(0).args[0].auth, undefined);
-            }));
+            };
+            return request.send(reqOpts)
+                .then(() => {
+                    assert.strictEqual(http.request.calledOnce, true);
+                    assert.deepEqual(http.request.getCall(0).args[0].auth, undefined);
+                });
+        });
 
-        it('should not touch auth when using port 8100 with https', () => request.send(
-            {
+        it('should not touch auth when using port 8100 with https', () => {
+            const reqOpts = {
                 protocol: 'https:',
                 host: 'localhost',
                 port: 8100,
                 method: 'GET',
                 path: '/foo'
-            }
-        )
-            .then(() => {
-                assert.strictEqual(https.request.calledOnce, true);
-                assert.deepEqual(https.request.getCall(0).args[0].auth, undefined);
-            }));
+            };
+            return request.send(reqOpts)
+                .then(() => {
+                    assert.strictEqual(https.request.calledOnce, true);
+                    assert.deepEqual(https.request.getCall(0).args[0].auth, undefined);
+                });
+        });
     });
 
     it('should set Content-Length header if there is a body', () => {
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/foo',
+            method: 'POST'
+        };
         const body = {
             foo: 'bar'
         };
-
-        return request.send(
-            {
-                protocol: 'https:',
-                host: 'localhost',
-                path: '/foo',
-                method: 'POST'
-            }, body
-        )
+        return request.send(reqOpts, body)
             .then(() => {
                 assert.deepEqual(https.request.calledOnce, true);
                 assert.deepEqual(
@@ -145,36 +147,28 @@ describe('Request', () => {
     });
 
     it('should return parsed JSON if content header is application/json', () => {
-        const expectedBody = {
-            hello: 'world'
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/foo',
+            method: 'POST'
         };
-
-        return request.send(
-            {
-                protocol: 'https:',
-                host: 'localhost',
-                path: '/foo',
-                method: 'POST'
-            }, 'data'
-        )
+        return request.send(reqOpts, 'data')
             .then((responseBody) => {
-                assert.deepStrictEqual(responseBody, expectedBody);
+                assert.deepStrictEqual(responseBody, { hello: 'world' });
             });
     });
 
     it('should return raw data if content header is not application/json', () => {
-        const expectedBody = '0123456789abcdef';
-
-        return request.send(
-            {
-                protocol: 'https:',
-                host: 'localhost',
-                path: '/bar',
-                method: 'POST'
-            }, 'data'
-        )
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/bar',
+            method: 'POST'
+        };
+        return request.send(reqOpts, 'data')
             .then((responseBody) => {
-                assert.deepStrictEqual(responseBody, expectedBody);
+                assert.deepStrictEqual(responseBody, '0123456789abcdef');
             });
     });
 
@@ -198,6 +192,30 @@ describe('Request', () => {
             })
             .catch((error) => {
                 assert.strictEqual(error.message, 'body is not JSON: 0123456789abcdef');
+            });
+    });
+
+    it('should return response object if returnResponseObj option is set to true', () => {
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/foo',
+            method: 'POST'
+        };
+        return request.send(reqOpts, 'data', { returnResponseObj: true })
+            .then((responseBody) => {
+                assert.deepStrictEqual(
+                    responseBody,
+                    {
+                        body: {
+                            hello: 'world'
+                        },
+                        headers: {
+                            'content-type': 'application/json; charset=utf-8'
+                        },
+                        statusCode: 200
+                    }
+                );
             });
     });
 });
