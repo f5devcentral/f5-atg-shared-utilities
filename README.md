@@ -98,7 +98,7 @@ Inserts an item before another item in an array or at the end of the array.
 
 This collection of utils is for sending http requests.
 
-### send(options, body)
+### send(requestOptions, body, options)
 
 Send an http/https request using the options and body. This is a wrapper around [node's http/https](https://nodejs.org/api/https.html#https) request functionality.
 
