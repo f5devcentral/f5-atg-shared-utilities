@@ -5,32 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 ### Added
-- Added `returnResponseObj` option to `requestUtils.send`
 
 ### Fixed
 
 ### Changed
 
 ### Removed
+
+## [0.9.0] - 2023-07-11
+### Added
+- Added `returnResponseObj` option to `requestUtils.send`
 
 ## [0.8.0] - 2023-06-29
 ### Added
 - Added all methods from AS3 `arrayUtil.js`
 
-### Fixed
-
-### Changed
-
-### Removed
-
 ## [0.7.0] - 2023-06-02
 ### Added
 - Added `ipUtil.isIPinRange`, and `ipUtil.ipToNumberString` methods.
-### Fixed
-
-### Changed
-
-### Removed
 
 ## [0.6.0] - 2023-04-18
 ### Changed
@@ -60,94 +52,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update packages
 
 ## [0.5.2] 2022-12-20
-### Added
-
-### Fixed
-
 ### Changed
 - Handle special F5 addresses (any, route domain, etc) in ipUtils.splitAddress
 
-### Removed
-
 ## [0.5.1] 2022-12-08
-### Added
-
 ### Fixed
 - Fix path to tmsh for older BIG-IP versions
 
-### Changed
-
-### Removed
-
 ## [0.5.0] 2022-12-08
-### Added
-
 ### Fixed
 - Get primary admin user from system for http requests to port 8100
 
-### Changed
-
-### Removed
-
 ## [0.4.11] 2022-11-22
-### Added
-
-### Fixed
-
 ### Changed
 - Update packages
 
-### Removed
-
 ## [0.4.10] 2022-10-06
-### Added
-
 ### Fixed
 - Handle wildcard addresses with route domains in minimizeIP
 
-### Changed
-
-### Removed
-
 ## [0.4.9] 2022-10-06
-### Added
-
 ### Fixed
 - AUTOTOOL-3505: handle wildcard addresses in minimizeIP
 
-### Changed
-
-### Removed
-
 ## [0.4.8]
-### Added
-
-### Fixed
-
 ### Changed
 - Fix use of 'this' in secureVault
 
-### Removed
-
 ## [0.4.7] 2022-09-29
-### Added
-
-### Fixed
-
 ### Changed
 - Update packages
-
-### Removed
 
 ## [0.4.6] 2022-07-27
-### Added
-
-### Fixed
-
 ### Changed
 - Update packages
-
-### Removed
 
 ## [0.4.5] - 2022-05-03
 ### Changed
