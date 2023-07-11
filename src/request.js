@@ -30,18 +30,22 @@ class Request {
      * This function sends an HTTP request to an endpoint denoted in the supplied options object.
      *
      * @private
-     * @param {object} options - A JSON object with the following params. These are passed on to node's http/https
-     *                           request method. See https://nodejs.org/api/https.html#httpsrequestoptions-callback
-     *                           for details.
-     * @param {object} options.headers - Holds various header options (e.g. 'Content-Length')
-     * @param {string} options.protocol - 'http:' or 'https:'
-     * @param {number} options.port
-     * @param {string} options.auth - 'user:'
+     * @param {object} requestOptions - A JSON object with the following params. These are passed on to node's
+     *                                  http/https request method. See
+     *                                  https://nodejs.org/api/https.html#httpsrequestoptions-callback for details.
+     * @param {object} requestOptions.headers - Holds various header options (e.g. 'Content-Length')
+     * @param {string} requestOptions.protocol - 'http:' or 'https:'
+     * @param {number} requestOptions.port
+     * @param {string} requestOptions.auth - 'user:'
      * @param {object} body
-     * @returns {Promise} Promise object that resolves with the response body
+     * @param {object} [options] - Addtional options to modify how the function behaves
+     * @param {boolean} [options.returnResponseObj] - If true, returns the response object instead of just the body
+     * @returns {Promise} Promise object that resolves with either the response body or the response object depending on
+     *                    the options that are provided
      */
-    static send(options, body) {
-        const reqOpts = JSON.parse(JSON.stringify(options));
+    static send(requestOptions, body, options) {
+        const reqOpts = JSON.parse(JSON.stringify(requestOptions));
+        const opts = options || {};
         let protocol = https;
         let jsonBody;
 
@@ -87,14 +91,14 @@ class Request {
                             console.log(`\nResponse from https://${reqOpts.host}/${reqOpts.path}:`);
                         }
                         if (buffer.length === 0) {
-                            resolve('');
+                            resolve(buildResponse('', response, opts));
                             return;
                         }
                         if (response.statusCode === 204) {
                             if (DEBUG) {
                                 console.log(response.statusCode);
                             }
-                            resolve('');
+                            resolve(buildResponse('', response, opts));
                             return;
                         }
 
@@ -124,7 +128,7 @@ class Request {
                         if (DEBUG) {
                             console.log(response.statusCode, data);
                         }
-                        resolve(data);
+                        resolve(buildResponse(data, response, opts));
                     });
                 });
 
@@ -162,6 +166,17 @@ function getPrimaryAdminUser() {
             const adminUser = result.value.replace(/"/g, '');
             return Promise.resolve(adminUser);
         });
+}
+
+function buildResponse(body, response, options) {
+    if (options.returnResponseObj) {
+        return {
+            body,
+            statusCode: response.statusCode,
+            headers: response.headers
+        };
+    }
+    return body;
 }
 
 module.exports = Request;
