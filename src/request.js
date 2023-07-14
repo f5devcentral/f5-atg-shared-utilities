@@ -40,12 +40,17 @@ class Request {
      * @param {object} body
      * @param {object} [options] - Addtional options to modify how the function behaves
      * @param {boolean} [options.returnResponseObj] - If true, returns the response object instead of just the body
+     * @param {boolean} [options.rejectErrStatusCodes=true] - If true, rejects the promise when a response with a
+     *                                                        400+ status code is received. Defaults to true
      * @returns {Promise} Promise object that resolves with either the response body or the response object depending on
      *                    the options that are provided
      */
     static send(requestOptions, body, options) {
         const reqOpts = JSON.parse(JSON.stringify(requestOptions));
-        const opts = options || {};
+        const defaultOptions = {
+            rejectErrStatusCodes: true
+        };
+        const opts = Object.assign(defaultOptions, options);
         let protocol = https;
         let jsonBody;
 
@@ -102,7 +107,7 @@ class Request {
                             return;
                         }
 
-                        if (response.statusCode >= 400) {
+                        if (response.statusCode >= 400 && opts.rejectErrStatusCodes) {
                             if (DEBUG) {
                                 console.error(response.statusCode, buffer);
                             }
