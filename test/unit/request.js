@@ -16,11 +16,16 @@
 
 'use strict';
 
-const assert = require('assert');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+
 const http = require('http');
 const https = require('https');
 const sinon = require('sinon');
 const nock = require('nock');
+
+chai.use(chaiAsPromised);
+const assert = chai.assert;
 
 const request = require('../../src/request');
 const tmshUtil = require('../../src/tmshUtils');
@@ -36,6 +41,10 @@ describe('Request', () => {
         nock('https://localhost')
             .post('/bar')
             .reply(200, '0123456789abcdef');
+
+        nock('https://localhost')
+            .post('/bad')
+            .reply(422, 'Unprocessable Content');
     });
 
     afterEach(() => {
@@ -140,7 +149,7 @@ describe('Request', () => {
             .then(() => {
                 assert.deepEqual(https.request.calledOnce, true);
                 assert.deepEqual(
-                    https.request.getCall(0).args[0].headers['Content-Length'],
+                    parseInt(https.request.getCall(0).args[0].headers['Content-Length'], 10),
                     JSON.stringify(body).length
                 );
             });
@@ -216,6 +225,29 @@ describe('Request', () => {
                         statusCode: 200
                     }
                 );
+            });
+    });
+
+    it('should reject if client/server error status code and rejectErrStatusCodes option is set to true', () => {
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/bad',
+            method: 'POST'
+        };
+        return assert.isRejected(request.send(reqOpts, 'data'), '422 Unprocessable Content');
+    });
+
+    it('should resolve if client/server error status code and rejectErrStatusCodes option is set to false', () => {
+        const reqOpts = {
+            protocol: 'https:',
+            host: 'localhost',
+            path: '/bad',
+            method: 'POST'
+        };
+        return request.send(reqOpts, 'data', { rejectErrStatusCodes: false })
+            .then((body) => {
+                assert.strictEqual(body, 'Unprocessable Content');
             });
     });
 });

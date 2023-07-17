@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.10.0] - 2023-07-17
+### Added
+- Added `rejectErrStatusCodes` option to `requestUtils.send`
+
 ## [0.9.0] - 2023-07-11
 ### Added
 - Added `returnResponseObj` option to `requestUtils.send`
