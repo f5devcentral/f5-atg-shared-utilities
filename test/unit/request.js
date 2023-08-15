@@ -16,11 +16,12 @@
 
 'use strict';
 
+const http = require('http');
+const https = require('https');
+
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
-const http = require('http');
-const https = require('https');
 const sinon = require('sinon');
 const nock = require('nock');
 
