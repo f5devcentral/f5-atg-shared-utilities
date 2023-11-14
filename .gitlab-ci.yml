@@ -1,9 +1,9 @@
-# AT generally uses node 4.8.0 and so this will too
+image: $DOCKER_URL/node:20
+
 stages:
-    - atg-shared-checks
-    - lint
-    - test
-    - publish
+  - atg-shared-checks
+  - test
+  - publish
 
 # This inherits all the jobs defined in the parent template
 # Override variables in this project as needed
@@ -11,31 +11,32 @@ include:
 # adds atg-shared-checks stage and jobs
 # adds atg_shared_checks_result job to test stage
   - project: automation-toolchain/atg-shared-templates
-    file: security/base.gitlab-ci.yml
+    file:
+      - compliance/base.gitlab-ci.yml
+      - security/base.gitlab-ci.yml
+
+check_copyrights:
+  allow_failure: false
 
 lint:
-    image: $DOCKER_URL/node:12-buster
-    stage: lint
-    script:
-        - npm ci
-        - npm run lint
+  allow_failure: false
 
 node:4:
-    image: $DOCKER_URL/node:4.8.0
-    stage: test
-    script:
-        - npm install --global npm@5.10.0
-        - npm install
-        - npm install mocha@5.2.0
-        - npm test
+  image: $DOCKER_URL/node:4.8.0
+  stage: test
+  script:
+    - npm install --global npm@5.10.0
+    - npm install
+    - npm install mocha@5.2.0
+    - npm test
 
 node:6:
-    image: $DOCKER_URL/node:6
-    stage: test
-    script:
-        - npm install
-        - npm install mocha@6.2.2
-        - npm test
+  image: $DOCKER_URL/node:6
+  stage: test
+  script:
+    - npm install
+    - npm install mocha@6.2.2
+    - npm test
 
 node:8:
   image: $DOCKER_URL/node:8.11.1
@@ -47,34 +48,22 @@ node:8:
     - npm run test
 
 node:more_recent:
-    image: $DOCKER_URL/node:12-buster
-    stage: test
-    script:
-        - npm ci
-        - npm test
+  image: $DOCKER_URL/node:12-buster
+  stage: test
+  script:
+    - npm ci
+    - npm test
 
 coverage:
-    image: $DOCKER_URL/node:12-buster
-    stage: test
-    script:
-        - npm ci
-        - npm run coverage
-    artifacts:
-        paths:
-            - coverage
-    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-
-audit:
-  image: $DOCKER_URL/node:lts
+  image: $DOCKER_URL/node:12-buster
   stage: test
-  needs: []
-  variables:
-    NODE_OPTIONS: "--dns-result-order=ipv4first"
-  allow_failure: true
-  tags:
-    - cm-official-docker-executor
   script:
-    - npm audit
+    - npm ci
+    - npm run coverage
+  artifacts:
+    paths:
+        - coverage
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 pages:
   stage: publish
