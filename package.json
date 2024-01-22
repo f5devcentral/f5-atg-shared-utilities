@@ -1,19 +1,19 @@
 {
     "name": "@f5devcentral/atg-shared-utilities",
-    "version": "0.10.3",
+    "version": "0.10.4",
     "scripts": {
         "lint": "eslint .",
         "test": "mocha test/unit/ --recursive",
         "coverage": "nyc npm test"
     },
     "dependencies": {
-        "big-integer": "^1.6.51"
+        "big-integer": "^1.6.52"
     },
     "devDependencies": {
-        "@f5devcentral/eslint-config-f5-atg": "latest",
-        "chai": "^4.3.10",
+        "@f5devcentral/eslint-config-f5-atg": "^0.1.8",
+        "chai": "^4.4.1",
         "chai-as-promised": "^7.1.1",
-        "eslint": "^8.53.0",
+        "eslint": "^8.56.0",
         "mocha": "^10.2.0",
         "nock": "10.0.0",
         "nyc": "^15.1.0",
