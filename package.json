@@ -1,6 +1,6 @@
 {
     "name": "@f5devcentral/atg-shared-utilities",
-    "version": "0.10.6",
+    "version": "0.10.7",
     "scripts": {
         "lint": "eslint .",
         "test": "mocha test/unit/ --recursive",
@@ -11,10 +11,10 @@
     },
     "devDependencies": {
         "@f5devcentral/eslint-config-f5-atg": "^0.1.8",
-        "chai": "^4.4.1",
+        "chai": "^4.5.0",
         "chai-as-promised": "^7.1.2",
         "eslint": "^8.57.0",
-        "mocha": "^10.6.0",
+        "mocha": "^10.7.3",
         "nock": "10.0.0",
         "nyc": "^15.1.0",
         "sinon": "7.5.0"
