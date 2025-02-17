@@ -1,6 +1,6 @@
 {
     "name": "@f5devcentral/atg-shared-utilities",
-    "version": "0.10.7",
+    "version": "0.10.8",
     "scripts": {
         "lint": "eslint .",
         "test": "mocha test/unit/ --recursive",
